@@ -1,0 +1,18 @@
+:root{ --accent:#0366d6; --bg:#fff; --muted:#6b7280; --container:1000px; font-family:Inter,system-ui,Arial;}
+*{box-sizing:border-box}
+body{margin:0;background:#f7fafc;color:#111;}
+.container{max-width:var(--container);margin:1.25rem auto;padding:1rem;}
+.site-header{background:linear-gradient(90deg,#fff,#f1f5f9);padding:0.8rem;border-radius:8px;margin-bottom:1rem;display:flex;align-items:center;justify-content:space-between}
+.brand{font-weight:700}
+.main-nav a{margin-left:12px;color:#0366d6;text-decoration:none}
+.card{background:#fff;padding:1rem;border-radius:8px;margin-bottom:1rem;box-shadow:0 1px 4px rgba(12,12,12,0.04)}
+.form-row{display:flex;gap:0.5rem;align-items:center;margin-top:0.5rem}
+input,select,textarea{padding:0.5rem;border:1px solid #e6edf3;border-radius:6px;flex:1}
+button.btn{background:var(--accent);color:#fff;border:0;padding:0.5rem 0.8rem;border-radius:6px;cursor:pointer}
+.small{font-size:0.9rem}
+.muted{color:var(--muted);margin-top:0.5rem}
+.grid .question{margin-bottom:0.75rem;padding:0.5rem;border-radius:6px;background:#f8fafc;border:1px solid #eef2ff}
+.question input{width:100%}
+@media(min-width:720px){
+  .form-row{flex-wrap:nowrap}
+}
