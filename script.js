@@ -40,3 +40,59 @@ document.getElementById("notesBtn")?.addEventListener("click", () => {
     download.download = "YT-Notes.pdf";
     download.click();
 });
+// Merge PDF
+document.addEventListener('DOMContentLoaded', () => {
+    const mergeBtn = document.getElementById("mergeBtn");
+    const mergeInput = document.getElementById("mergeInput");
+
+    if (mergeBtn) {
+        mergeBtn.addEventListener("click", async () => {
+            const files = mergeInput.files;
+            if (files.length < 2) {
+                alert("Please select at least 2 PDFs");
+                return;
+            }
+
+            const { PDFDocument } = PDFLib;
+            const mergedPdf = await PDFDocument.create();
+
+            for (let file of files) {
+                const pdfBytes = await file.arrayBuffer();
+                const pdf = await PDFDocument.load(pdfBytes);
+                const copiedPages = await mergedPdf.copyPages(pdf, pdf.getPageIndices());
+                copiedPages.forEach((page) => mergedPdf.addPage(page));
+            }
+
+            const mergedBytes = await mergedPdf.save();
+            download(mergedBytes, "merged.pdf", "application/pdf");
+        });
+    }
+});
+
+// Text to PDF
+function generatePDF() {
+    const text = document.getElementById("textInput").value;
+
+    if (!text.trim()) {
+        alert("Enter text first!");
+        return;
+    }
+
+    const { PDFDocument, StandardFonts } = PDFLib;
+
+    (async () => {
+        const pdfDoc = await PDFDocument.create();
+        const page = pdfDoc.addPage();
+        const font = await pdfDoc.embedFont(StandardFonts.Helvetica);
+
+        page.drawText(text, { x: 40, y: 750, size: 12, font });
+
+        const pdfBytes = await pdfDoc.save();
+        download(pdfBytes, "text.pdf", "application/pdf");
+    })();
+}
+
+// YouTube Notes (placeholder)
+function getYTNotes() {
+    alert("YouTube Notes feature coming soon!");
+}
