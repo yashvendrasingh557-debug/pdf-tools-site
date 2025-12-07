@@ -1,1 +1,44 @@
-<h1>YouTube Notes to PDF</h1><p>Feature coming soon.</p>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>YT Notes to PDF</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <style>
+        body { font-family: Arial; text-align: center; padding: 20px; }
+        input { width: 90%; max-width: 400px; padding: 10px; }
+        button { margin-top: 15px; padding: 10px 20px; font-size: 18px; }
+    </style>
+</head>
+<body>
+
+    <h2>YouTube Notes → PDF</h2>
+
+    <input id="ytLink" placeholder="Paste YouTube video link here"><br>
+    <button onclick="generateNotes()">Generate PDF</button>
+
+    <script>
+        async function generateNotes() {
+            const link = document.getElementById("ytLink").value.trim();
+
+            if (!link) {
+                alert("Paste a YouTube link");
+                return;
+            }
+
+            const { jsPDF } = window.jspdf;
+            const pdf = new jsPDF();
+
+            pdf.text("YouTube Video Notes", 10, 10);
+            pdf.text("Video URL:", 10, 20);
+            pdf.text(link, 10, 30);
+
+            pdf.text("NOTE:", 10, 50);
+            pdf.text("Write your own notes here. (Auto notes coming soon)", 10, 60);
+
+            pdf.save("YT-Notes.pdf");
+        }
+    </script>
+
+</body>
+</html>
