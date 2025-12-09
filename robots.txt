@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://yashvendrasingh557-debug.github.io/pdf-tools-site/robots.txt
+Sitemap: https://yashvendrasingh557-debug.github.io/pdf-tools-site/sitemap.xml
