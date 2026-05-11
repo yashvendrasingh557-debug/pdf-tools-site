@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PlayZone Demo Wallet</title>
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    .wallet-wrap{max-width:820px;margin:40px auto;padding:24px;background:#fff;border-radius:14px;box-shadow:0 10px 24px rgba(0,0,0,.08)}
+    .row{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+    .card{border:1px solid #e8e8e8;border-radius:10px;padding:16px}
+    label{display:block;font-weight:600;margin-bottom:8px}
+    input,select,button{width:100%;padding:10px;border-radius:8px;border:1px solid #ccc}
+    button{background:#111;color:#fff;border:none;cursor:pointer;font-weight:700}
+    .balance{font-size:1.5rem;font-weight:800;margin-bottom:12px}
+    .muted{color:#666;font-size:.92rem}
+    .log{margin-top:16px;max-height:220px;overflow:auto;font-size:.95rem}
+    .log li{padding:8px 0;border-bottom:1px dashed #e2e2e2}
+    @media (max-width:700px){.row{grid-template-columns:1fr}}
+  </style>
+</head>
+<body>
+  <div class="wallet-wrap">
+    <h1>PlayZone Demo Wallet</h1>
+    <p class="muted">This is a <strong>demo-only gaming wallet</strong> for learning UI flows. No real-money gambling, betting, or live UPI payments are processed.</p>
+
+    <div class="card">
+      <div class="balance">Balance: ₹<span id="balance">1000</span></div>
+      <p class="muted">Use this simulated wallet to test deposit/withdraw interactions.</p>
+    </div>
+
+    <div class="row" style="margin-top:16px;">
+      <div class="card">
+        <h2>Demo Deposit</h2>
+        <label for="depositAmount">Amount (₹)</label>
+        <input id="depositAmount" type="number" min="1" placeholder="e.g. 500" />
+        <label for="depositApp" style="margin-top:10px;">Mock UPI App</label>
+        <select id="depositApp">
+          <option>Google Pay</option>
+          <option>PhonePe</option>
+          <option>Paytm</option>
+          <option>BHIM</option>
+          <option>Amazon Pay UPI</option>
+        </select>
+        <button id="depositBtn" style="margin-top:12px;">Simulate Deposit</button>
+      </div>
+
+      <div class="card">
+        <h2>Demo Withdraw</h2>
+        <label for="withdrawAmount">Amount (₹)</label>
+        <input id="withdrawAmount" type="number" min="1" placeholder="e.g. 300" />
+        <label for="withdrawUpi" style="margin-top:10px;">UPI ID</label>
+        <input id="withdrawUpi" type="text" placeholder="name@bank" />
+        <button id="withdrawBtn" style="margin-top:12px;">Simulate Withdraw</button>
+      </div>
+    </div>
+
+    <div class="card log">
+      <h3>Transaction Log</h3>
+      <ul id="log"></ul>
+    </div>
+  </div>
+
+  <script>
+    let balance = 1000;
+    const balanceEl = document.getElementById('balance');
+    const logEl = document.getElementById('log');
+
+    function addLog(text){
+      const li = document.createElement('li');
+      li.textContent = `${new Date().toLocaleString()} — ${text}`;
+      logEl.prepend(li);
+    }
+
+    document.getElementById('depositBtn').addEventListener('click', () => {
+      const amount = Number(document.getElementById('depositAmount').value);
+      const app = document.getElementById('depositApp').value;
+      if (!amount || amount <= 0) return alert('Enter a valid deposit amount.');
+      balance += amount;
+      balanceEl.textContent = balance;
+      addLog(`Deposited ₹${amount} via ${app} (simulation).`);
+    });
+
+    document.getElementById('withdrawBtn').addEventListener('click', () => {
+      const amount = Number(document.getElementById('withdrawAmount').value);
+      const upiId = document.getElementById('withdrawUpi').value.trim();
+      if (!amount || amount <= 0) return alert('Enter a valid withdrawal amount.');
+      if (!upiId.includes('@')) return alert('Enter a valid UPI ID.');
+      if (amount > balance) return alert('Insufficient demo balance.');
+      balance -= amount;
+      balanceEl.textContent = balance;
+      addLog(`Withdrew ₹${amount} to ${upiId} (simulation).`);
+    });
+  </script>
+</body>
+</html>
